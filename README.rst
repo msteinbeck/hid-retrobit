@@ -3,6 +3,8 @@ Driver for the Retro-Bit Atari joystick controller adapter
 This is a USB to dual-DB9 header controller that allows the use of actual Atari
 compatible joysticks in emulators.
 
+http://www.amazon.com/gp/product/B007ZS35CU/
+
 
 Problem
 =======
