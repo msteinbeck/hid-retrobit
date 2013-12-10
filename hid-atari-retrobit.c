@@ -22,6 +22,8 @@
 #include <linux/slab.h>
 #include <linux/usb.h>
 
+#define DEBUG_ATARI
+
 static int atari_raw_event(struct hid_device *hdev, struct hid_report *report,
 		__u8 *rd, int size)
 {
@@ -32,13 +34,19 @@ static int atari_raw_event(struct hid_device *hdev, struct hid_report *report,
 		rd[1] is a bit mask of 1 = right, 2 = left, 4 = down, 8 = up
 		rd[2] is fire button pressed
 	*/
-/*	printk(KERN_ALERT "atari:  before %d: %x %x %x\n", size, rd[0], rd[1], rd[2]);*/
+
+#ifdef DEBUG_ATARI
+	printk(KERN_ALERT "atari:  before %d: %x %x %x\n", size, rd[0], rd[1], rd[2]);
+#endif
+
 	lr = rd[1] & 0x03;
 	if (lr == 2) rd[1] = (rd[1] & ~0x03) | 0x03;
 	ud = rd[1] & 0x0c;
 	if (ud == 8) rd[1] = (rd[1] & ~0x0c) | 0x0c;
 /*	rd[1] = (rd[1] & 0xfe) | (~rd[1] & 0x01);*/
-/*	printk(KERN_ALERT "after %d: %x %x %x\n", size, rd[0], rd[1], rd[2]);*/
+#ifdef DEBUG_ATARI
+	printk(KERN_ALERT "after %d: %x %x %x\n", size, rd[0], rd[1], rd[2]);
+#endif
 	return 0;
 }
 
@@ -46,7 +54,9 @@ static int atari_probe(struct hid_device *hdev, const struct hid_device_id *id)
 {
 	int ret;
 
-/*	printk(KERN_ALERT "atari_probe\n");*/
+#ifdef DEBUG_ATARI
+	printk(KERN_ALERT "atari_probe\n");
+#endif
 
 	hdev->quirks |= id->driver_data;
 
@@ -80,9 +90,12 @@ static void atari_remove(struct hid_device *hdev)
 
 #define USB_VENDOR_ID_INNEX			0x1292
 #define USB_DEVICE_ID_INNEX_ATARI_CONTROLLER	0x4154
+#define USB_DEVICE_ID_INNEX_NES_CONTROLLER	0x4643
 
 static const struct hid_device_id atari_devices[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_INNEX, USB_DEVICE_ID_INNEX_ATARI_CONTROLLER),
+		.driver_data = HID_QUIRK_MULTI_INPUT },
+	{ HID_USB_DEVICE(USB_VENDOR_ID_INNEX, USB_DEVICE_ID_INNEX_NES_CONTROLLER),
 		.driver_data = HID_QUIRK_MULTI_INPUT },
 	{ }
 };
@@ -98,11 +111,17 @@ static struct hid_driver atari_driver = {
 
 static int __init atari_init(void)
 {
+#ifdef DEBUG_ATARI
+	printk(KERN_ALERT "atari_init\n");
+#endif
 	return hid_register_driver(&atari_driver);
 }
 
 static void __exit atari_exit(void)
 {
+#ifdef DEBUG_ATARI
+	printk(KERN_ALERT "atari_exit\n");
+#endif
 	hid_unregister_driver(&atari_driver);
 }
 
