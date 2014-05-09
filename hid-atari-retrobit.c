@@ -22,7 +22,7 @@
 static int atari_raw_event(struct hid_device *hdev, struct hid_report *report,
 		__u8 *rawdata, int size)
 {    
-	__u8 updown, leftright;
+	__u8 updown, leftright, dpad;
  
 /*
         rawdata[0] specifies controller 1 or 2 in dual controller adapters,
