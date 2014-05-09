@@ -34,17 +34,13 @@ static int atari_raw_event(struct hid_device *hdev, struct hid_report *report,
  
          rawdata[2] is button presses in dual controller adapters
 */
-        if (!(hdev->quirks & HID_QUIRK_MULTI_INPUT)) {
-                leftright = rawdata[0] & 0x03;
-                if (leftright == 2) rawdata[0] = (rawdata[1] & ~0x03) | 0x03;
-                updown = rawdata[0] & 0x0c;
-                if (updown == 8) rawdata[1] = (rawdata[1] & ~0x0c) | 0x0c;
-        } else {
-                leftright = rawdata[1] & 0x03;
-                if (leftright == 2) rawdata[1] = (rawdata[1] & ~0x03) | 0x03;
-                updown = rawdata[1] & 0x0c;
-                if (updown == 8) rawdata[1] = (rawdata[1] & ~0x0c) | 0x0c;
-        }
+	dpad = (hdev->quirks & HID_QUIRK_MULTI_INPUT) ? 1 : 0;
+
+        leftright = rawdata[dpad] & 0x03;
+        if (leftright == 2) rawdata[dpad] = (rawdata[dpad] & ~0x03) | 0x03;
+        updown = rawdata[dpad] & 0x0c;
+        if (updown == 8) rawdata[dpad] = (rawdata[dpad] & ~0x0c) | 0x0c;
+
  
         return 0;
 }
