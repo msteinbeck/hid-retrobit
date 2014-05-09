@@ -1,4 +1,4 @@
-Driver for the Retro-Bit Atari, Nintendo NES, SNES & Sega Genesis joystick controller adapters
+Driver for the Retro-Bit Atari, Nintendo NES, SNES & Sega Genesis joystick controller adapters.
 
 This is a USB to dual-DB9, NES/SNES or Genesis header controller that allows the use of actual 
 compatible joysticks in emulators.
@@ -134,7 +134,7 @@ If you have no other USB input device, your favourite paddle just now works !
 Pressing the up/left key should returns the value -32767.
 
 However, if you have any USB input device plugged in, such as a simple USB
-keyboard, the usbhid driver binds the paddle before the retrobit driver. 
+keyboard, the USB hid-generic driver binds the paddle before the retrobit driver. 
 You have to unbind the adapter from usbhid. Download and execute the following script.
 
     # sudo ./installdriver.sh
