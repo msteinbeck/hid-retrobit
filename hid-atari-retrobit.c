@@ -1,5 +1,5 @@
 /*
- *  HID driver for Retrolink adapters & paddles devices
+ *  HID driver for Retrobit/Retrolink adapters & paddles devices
  *
  *  Copyright (c) 2013 RobMcMullen
  */
