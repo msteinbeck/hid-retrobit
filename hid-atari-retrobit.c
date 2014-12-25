@@ -17,6 +17,46 @@
 #include <linux/slab.h>
 #include <linux/usb.h>
 
+
+/********************************************************
+*                                                       *
+* Setup supported devices                               *
+*                                                       *
+********************************************************/
+#define USB_VENDOR_ID_INNEX                  0x1292
+#define USB_DEVICE_ID_INNEX_ATARI_CONTROLLER 0x4154
+#define USB_DEVICE_ID_INNEX_NES_CONTROLLER   0x4643
+#define USB_DEVICE_ID_INNEX_SNES_ADAPTER     0x5346
+#define USB_DEVICE_ID_INNEX_GENESIS_ADAPTER  0x4745
+
+static const struct hid_device_id atari_devices[] = {
+    {
+        HID_USB_DEVICE(USB_VENDOR_ID_INNEX, USB_DEVICE_ID_INNEX_ATARI_CONTROLLER),
+        .driver_data = HID_QUIRK_MULTI_INPUT
+    },
+    {
+        HID_USB_DEVICE(USB_VENDOR_ID_INNEX, USB_DEVICE_ID_INNEX_NES_CONTROLLER),
+        .driver_data = 0x0 // single controller only
+    },
+    {
+        HID_USB_DEVICE(USB_VENDOR_ID_INNEX, USB_DEVICE_ID_INNEX_SNES_ADAPTER),
+        .driver_data = HID_QUIRK_MULTI_INPUT
+    },
+    {
+        HID_USB_DEVICE(USB_VENDOR_ID_INNEX, USB_DEVICE_ID_INNEX_GENESIS_ADAPTER),
+        .driver_data = HID_QUIRK_MULTI_INPUT
+    },
+    {}
+};
+
+MODULE_DEVICE_TABLE(hid, atari_devices);
+
+
+/********************************************************
+*                                                       *
+* Module handler functions                              *
+*                                                       *
+********************************************************/
 static int atari_raw_event(
     struct hid_device *hdev, struct hid_report *report, __u8 *rawdata, int size
 )
@@ -82,38 +122,17 @@ static void atari_remove(struct hid_device *hdev)
     kfree(hid_get_drvdata(hdev));
 }
 
-#define USB_VENDOR_ID_INNEX                  0x1292
-#define USB_DEVICE_ID_INNEX_ATARI_CONTROLLER 0x4154
-#define USB_DEVICE_ID_INNEX_NES_CONTROLLER   0x4643
-#define USB_DEVICE_ID_INNEX_SNES_ADAPTER     0x5346
-#define USB_DEVICE_ID_INNEX_GENESIS_ADAPTER  0x4745
 
-static const struct hid_device_id atari_devices[] = {
-    {
-        HID_USB_DEVICE(USB_VENDOR_ID_INNEX, USB_DEVICE_ID_INNEX_ATARI_CONTROLLER),
-        .driver_data = HID_QUIRK_MULTI_INPUT
-    },
-    {
-        HID_USB_DEVICE(USB_VENDOR_ID_INNEX, USB_DEVICE_ID_INNEX_NES_CONTROLLER),
-        .driver_data = 0x0 // single controller only
-    },
-    {
-        HID_USB_DEVICE(USB_VENDOR_ID_INNEX, USB_DEVICE_ID_INNEX_SNES_ADAPTER),
-        .driver_data = HID_QUIRK_MULTI_INPUT
-    },
-    {
-        HID_USB_DEVICE(USB_VENDOR_ID_INNEX, USB_DEVICE_ID_INNEX_GENESIS_ADAPTER),
-        .driver_data = HID_QUIRK_MULTI_INPUT
-    },
-    {}
-};
-MODULE_DEVICE_TABLE(hid, atari_devices);
-
+/********************************************************
+*                                                       *
+* Setup module                                          *
+*                                                       *
+********************************************************/
 static struct hid_driver atari_driver = {
-    .name = "atari",
-    .id_table = atari_devices,
-    .probe = atari_probe,
-    .remove = atari_remove,
+    .name      = "atari",
+    .id_table  = atari_devices,
+    .probe     = atari_probe,
+    .remove    = atari_remove,
     .raw_event = atari_raw_event
 };
 
