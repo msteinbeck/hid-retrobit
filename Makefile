@@ -1,38 +1,36 @@
-# Comment/uncomment the following line to disable/enable debugging
-#DEBUG = y
+# optimize module with O2
+ccflags-y += -O2
 
-
-# Add your debugging flag (or not) to CFLAGS
-ifeq ($(DEBUG),y)
-  DEBFLAGS = -O -g -DSHORT_DEBUG # "-O" is needed to expand inlines
-else
-  DEBFLAGS = -O2
-endif
-
-ccflags-y += $(DEBFLAGS)
-
+# seperate the two parts of the Makefile (kbuild and normal)
+# see https://www.kernel.org/doc/Documentation/kbuild/modules.txt
 ifneq ($(KERNELRELEASE),)
-# call from kernel build system
-
-obj-m	:= hid-atari-retrobit.o
+# kbuild part of makefile
+obj-m := hid-atari-retrobit.o
 
 else
+# normal makefile
+KDIR ?= /lib/modules/`uname -r`/build
 
-KERNELDIR ?= /lib/modules/$(shell uname -r)/build
-PWD       := $(shell pwd)
+all:
+	$(MAKE) -C $(KDIR) M=$$PWD modules
 
-default:
-	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
-
-endif
-
+install:
+	$(MAKE) -C $(KDIR) M=$$PWD modules_install
 
 clean:
-	rm -rf *.o *~ core .depend .*.cmd *.ko *.mod.c .tmp_versions Module.symvers modules.order
+	$(MAKE) -C $(KDIR) M=$$PWD clean
+
+help:
+	@echo ""
+	@echo "  all     - default target, build the module"
+	@echo "  install - install the module (requires root privileges)"
+	@echo "  clean   - remove generated files"
+	@echo "  help    - display this text"
+	@echo ""
+endif
 
 depend .depend dep:
 	$(CC) $(CFLAGS) -M *.c > .depend
-
 
 ifeq (.depend,$(wildcard .depend))
 include .depend
