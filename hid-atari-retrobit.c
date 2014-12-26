@@ -54,7 +54,7 @@ MODULE_DEVICE_TABLE(hid, atari_devices);
 
 /********************************************************
 *                                                       *
-* Module handler functions                              *
+* Callbacks                                             *
 *                                                       *
 ********************************************************/
 static int atari_raw_event(
