@@ -2,6 +2,7 @@ Linux driver for the retro-bit (sometime called retrolink) Atari, Nintendo NES, 
 joystick and gamepad controller adapters. It allows the use of actual compatible devices in emulators.
 
 http://www.amazon.com/gp/product/B007ZS35CU/
+
 http://www.amazon.com/gp/product/B0080RAT42/
 
 Installation
