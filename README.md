@@ -1,9 +1,14 @@
-Linux driver for the retro-bit (sometime called Retro Link) Atari, Nintendo NES, SNES & Sega Genesis 
-joystick and gamepad controller adapters. It allows the use of actual compatible devices in emulators.
+hid-retrobit is a Linux driver for the retro-bit (sometime called Retro Link) Atari, 
+Nintendo NES, SNES & Sega Genesis joystick and gamepad controller adapters. 
+It allows the use of actual compatible devices in emulators.
 
-http://www.amazon.com/gp/product/B007ZS35CU/
-
+http://www.amazon.com/gp/product/B007ZS35CU/  
 http://www.amazon.com/gp/product/B0080RAT42/
+
+This driver is based on https://github.com/robmcmullen/hid-atari-retrobit.
+Unfortunately it looks that way that RobMcMulle doesn't maintain it anymore.
+However hid-retrobit is an improved version as it is much easier to install.
+If you are interested in the technical details have a look at [Details](/DETAILS.md).
 
 Installation
 =====
