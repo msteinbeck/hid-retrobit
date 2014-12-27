@@ -13,7 +13,17 @@ If you are interested in the technical details have a look at [Details](/DETAILS
 Installation
 =====
 
-TODO
+**Note:** The drivers *usbhid* and *hid-generic* **must** be installed as module.
+If one of them is installed build-in you need to recompile your kernel.
+
+Install the driver with the following commands:
+```bash
+make              # build the driver
+sudo make install # install the driver
+sudo depmod -a    # update the module dependency graph
+```
+
+TODO: ensure hid-retrobit gets loaded before usbhid and hid-generic
 
 Alternate solution
 ==================
