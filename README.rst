@@ -1,4 +1,4 @@
-Linux driver for the retro-bit (sometime called retrolink) Atari, Nintendo NES, SNES & Sega Genesis 
+Linux driver for the retro-bit (sometime called Retro Link) Atari, Nintendo NES, SNES & Sega Genesis 
 joystick and gamepad controller adapters. It allows the use of actual compatible devices in emulators.
 
 http://www.amazon.com/gp/product/B007ZS35CU/
