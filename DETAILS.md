@@ -1,11 +1,10 @@
 Problem
-=======
+----------------------
 
-The normal joydev/hid-input driver doesn't handle this correctly, as only right
-and down work.  It doesn't register left or up.  Tried 3 different machines,
-both amd64 and x86.  jstest shows the controller, but it can't generate the
--32767 value expected for up or left.  Here the joystick is registering down
-and right simultaneously::
+The default joydev/hid-input driver doesn't handle the axes correctly, as only right
+and down work properly. It doesn't register left or up. jstest shows the device, but 
+it can't generate the -32767 value expected for left or up. The following output
+shows an Atari joystick which registered right and down simultaneously::
 
     # jstest /dev/input/js0 
     Driver version is 2.1.0.
@@ -14,7 +13,7 @@ and right simultaneously::
     Testing ... (interrupt to exit)
     Axes:  0: 32767  1: 32767  2:     0  3:     0 Buttons:  0:off  1:off 
 
-Using DEBUG_FS, the device shows up in /sys/kernel/debug/usb/devices as::
+By using DEBUG_FS, the joystick shows up in /sys/kernel/debug/usb/devices as::
 
     T:  Bus=08 Lev=01 Prnt=01 Port=03 Cnt=01 Dev#=  2 Spd=1.5  MxCh= 0
     D:  Ver= 1.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 8 #Cfgs=  1
@@ -25,16 +24,17 @@ Using DEBUG_FS, the device shows up in /sys/kernel/debug/usb/devices as::
     I:* If#= 0 Alt= 0 #EPs= 1 Cls=03(HID  ) Sub=00 Prot=00 Driver=usbhid
     E:  Ad=81(I) Atr=03(Int.) MxPS=   8 Ivl=10ms
 
-or using lsusb::
+lsusb outputs::
 
+    # lsusb
     Bus 008 Device 003: ID 1292:4154 Innomedia 
 
 Not a hardware problem
 ----------------------
 
-Plugging it in to a windows machine works correctly.  Using the usbmon
-kernel module, I found out that the device is generating events for all the
-directions, so it isn't a hardware problem.
+Plugging the joystick in to a Windows machine works out of the box correctly. By 
+using the usbmon kernel module, one can see that the device is generating events 
+for all the directions, so it isn't a hardware problem.
 
 Player 1::
 
@@ -61,11 +61,15 @@ From the 8 bytes of data (here called rd)::
 USB Quirks
 ----------
 
-Found one issue: there are something flags called HID Quirks that are based
-on USB ID.  Turning on the HID_QUIRK_MULTI_INPUT (0x40) separates out the two
-controllers so there are /dev/input/js0 and /dev/input/js1, and jstest shows 2
-axes and one button for each joystick now.  But it doesn't correct the up/left
-problem::
+There are some flags called HID Quirks that are based on USB ID.
+
+HID_QUIRK_MULTI_INPUT
+................
+
+RobMcMullen found out, that turning on the HID_QUIRK_MULTI_INPUT (0x40) separates out 
+the two devices so that /dev/input/js0 and /dev/input/js1 are available. Furthermore 
+jstest shows 2 axes and one button for each joystick now. But it doesn't correct the 
+left/up problem itself::
 
     # rmmod usbhid
     # modprobe usbhid quirks=0x1292:0x4154:0x40
@@ -85,23 +89,22 @@ problem::
 HID_QUIRK_BADPAD
 ................
 
-Thought I was getting somewhere when I discovered the HID_QUIRK_BADPAD (0x20),
-which then allows jstest to recognize left and up, but unfortunately it marks
-left as 2, center as 0 and right as 1.  I spent a long time trying to figure
-out jscal with its limited documentation and it appears that jscal only has
-linear coefficients and can't cope with that.  It appears to assume that left
-will always be less than center and center always less than right.
+The HID_QUIRK_BADPAD (0x20) allows jstest to recognize left and up by marking left
+as 2, center as 0 and right as 1. Unfortunately it appears that jscal only has
+linear coefficients and can't cope with that because it somehow assumes that left will 
+always be less than center and center will always be less than right.
 
+Thanks again to RobMcMullen who spent a long time trying to figure out the problem
+(jscal has very limited documentation).
 
 
 Driver
-======
+................
 
 This device driver relies on the accidental discovery that when both left and
 right are pressed at the same time, joydev produces a correct result for left.
-(Similarly for up and down simulaneously).  Haven't figured out why because
-I haven't been able to trace through the HID input code.
+(Similarly for up and down).
 
-Since it doesn't happen in a real joystick, we can replace the value for left
-with (left & right) and not change any other aspects of the operation of the
-stick.
+Since this isn't applicable for real joysticks and gamepads, we can replace the 
+value for left with (left & right) and up with (up & down) without changing any 
+other aspects of the operation of the device.
