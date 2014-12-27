@@ -32,7 +32,7 @@ lsusb outputs::
 Not a hardware problem
 ----------------------
 
-Plugging the joystick in to a Windows machine works out of the box correctly. By 
+Plugging the joystick in to a Windows machine works correctly out of the box. By 
 using the usbmon kernel module, one can see that the device is generating events 
 for all the directions, so it isn't a hardware problem.
 
