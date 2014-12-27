@@ -63,8 +63,7 @@ USB Quirks
 
 There are some flags called HID Quirks that are based on USB ID.
 
-HID_QUIRK_MULTI_INPUT
-................
+##### HID_QUIRK_MULTI_INPUT
 
 RobMcMullen found out, that turning on the HID_QUIRK_MULTI_INPUT (0x40) separates out 
 the two devices so that /dev/input/js0 and /dev/input/js1 are available. Furthermore 
@@ -86,8 +85,7 @@ left/up problem itself::
     Testing ... (interrupt to exit)
     Axes:  0:     0  1:     0 Buttons:  0:off
 
-HID_QUIRK_BADPAD
-................
+##### HID_QUIRK_BADPAD
 
 The HID_QUIRK_BADPAD (0x20) allows jstest to recognize left and up by marking left
 as 2, center as 0 and right as 1. Unfortunately it appears that jscal only has
@@ -99,7 +97,7 @@ Thanks again to RobMcMullen who spent a long time trying to figure out the probl
 
 
 Driver
-................
+----------
 
 This device driver relies on the accidental discovery that when both left and
 right are pressed at the same time, joydev produces a correct result for left.
