@@ -7,7 +7,7 @@ http://www.amazon.com/gp/product/B0080RAT42/
 
 This driver is based on https://github.com/robmcmullen/hid-atari-retrobit.
 Unfortunately it looks that way that RobMcMulle doesn't maintain it anymore.
-However hid-retrobit is an improved version as it is much easier to install.
+However hid-retrobit is an improved version as it is much easier to install/use.
 If you are interested in the technical details have a look at [Details](/DETAILS.md).
 
 Installation
@@ -73,7 +73,7 @@ ignores such values. The fix consists in clamping the values instead of discardi
         
 In your linux kernel source directory, edit the file /drivers/hid/hid-input.c
 
-Search for::
+Search for:
 
     if ((field->flags & HID_MAIN_ITEM_VARIABLE) &&
         (value < field->logical_minimum ||
@@ -82,7 +82,7 @@ Search for::
             return;
     }
 
-and replace by::
+and replace by:
 
     if ((field->flags & HID_MAIN_ITEM_VARIABLE) &&
         (value < field->logical_minimum ||
