@@ -29,35 +29,22 @@ sudo modprobe hid-retrobit
 Unfortunately the driver *hid-generic* binds all HID devices with the result that 
 *hid-retrobit* is unable to do its job. The file **99-hid-retrobit.rules** contains
 some udev rules which unbinds all supported devices from *hid-generic* and rebinds
-them to *hid-retrobit* on the fly. Copy the file to **/lib/udev/rules.d** or, if this
-directory doesn't exist, to **/etc/udev/rules.d**. Finally, you need to load some 
-modules during boot time automatically. If the drivers *usbhid* and *hid-generic* 
-are build as module (most operating systems have this) you need to load 
-*hid-retrobit*, *usbhid* and *hid-generic*. If the drivers are build as build-in you 
-only need to load *hid-retrobit*. You can check your configuration for *usbhid* with:
-```bash
-cat /boot/config-`uname -r` | grep CONFIG_USB_HID
-```
+them to *hid-retrobit* on the fly. Copy this file to **/lib/udev/rules.d** or. If
+the directory doesn't exist, copy it to **/etc/udev/rules.d**. Finally, you need
+to load some modules during boot time automatically. 
 
-and for *hid-generic* with:
-```bash
-cat /boot/config-`uname -r` | grep CONFIG_HID_GENERIC
-```
-
-If the value is *m*, the dirver is build as module. If the value is *y*, the driver is
-build as build-in. To load the module(s) automatically, open the file **/etc/modules**
-(if exists) and append them. If, for example, you need to load *hid-retrobit*, *usbhid* 
-and *hid-generic* append the following entries:
+To ensure that the udev rules are able to rebind the supported devices you finally
+need to copy the file **hid-retrobit.conf** to **/etc/modules-load.d**. It contains
+the following modules with the result that they are loaded during boot time 
+automatically:
 ```bash
 hid-retrobit
 usbhid
 hid-generic
 ```
 
-If the file **/etc/modules** doesn't exist, create the file **hid-retrobit.conf** in
-**/etc/modules-load.d**.
-
-Now everything should be ready. Have fun playing games retro style :).
+Now your devices are ready to use. Restart your system and have fun playing games 
+retro style :).
 
 Alternate solution
 ==================
