@@ -1,6 +1,7 @@
 /*
  *
  * HID driver for retro-bit/Retro Link adapters & paddles devices
+ * URL: https://github.com/retuxx/hid-retrobit
  *
  * Copyright (c) 2013 RobMcMullen
  *
