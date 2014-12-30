@@ -23,7 +23,7 @@ GOTO="hid_retrobit_end"
 LABEL="hid_retrobit_interface"
 RUN+="/bin/sh -c 'sleep 1'"
 RUN+="/bin/sh -c 'ls /sys/bus/usb/devices/$kernel | grep .*:1292:.*..* > /sys/bus/hid/drivers/hid-generic/unbind'"
-RUN+="/bin/sh -c 'ls /sys/bus/usb/devices/$kernel | grep .*:1292:.*..* > /sys/bus/hid/drivers/atari/bind'"
+RUN+="/bin/sh -c 'ls /sys/bus/usb/devices/$kernel | grep .*:1292:.*..* > /sys/bus/hid/drivers/hid-retrobit/bind'"
 
 # All done
 LABEL="hid_retrobit_end" 

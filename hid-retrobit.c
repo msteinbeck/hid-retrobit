@@ -37,7 +37,7 @@
 #define USB_DEVICE_ID_INNEX_SNES_ADAPTER     0x5346
 #define USB_DEVICE_ID_INNEX_GENESIS_ADAPTER  0x4745
 
-static const struct hid_device_id atari_devices[] = {
+static const struct hid_device_id retrobit_devices[] = {
     {
         HID_USB_DEVICE(USB_VENDOR_ID_INNEX, USB_DEVICE_ID_INNEX_ATARI_CONTROLLER),
         .driver_data = HID_QUIRK_MULTI_INPUT
@@ -57,7 +57,7 @@ static const struct hid_device_id atari_devices[] = {
     {}
 };
 
-MODULE_DEVICE_TABLE(hid, atari_devices);
+MODULE_DEVICE_TABLE(hid, retrobit_devices);
 
 
 /********************************************************
@@ -65,7 +65,7 @@ MODULE_DEVICE_TABLE(hid, atari_devices);
 * Callbacks                                             *
 *                                                       *
 ********************************************************/
-static int atari_raw_event(
+static int retrobit_raw_event(
     struct hid_device *hdev, struct hid_report *report, __u8 *rawdata, int size
 )
 {
@@ -95,13 +95,13 @@ static int atari_raw_event(
     return 0;
 }
 
-static int atari_probe(
+static int retrobit_probe(
     struct hid_device *hdev, const struct hid_device_id *id
 )
 {
     int ret;
 
-    // add quirks, see struct atari_devices
+    // add quirks, see struct retrobit_devices
     hdev->quirks |= id->driver_data;
 
     ret = hid_parse(hdev);
@@ -124,7 +124,7 @@ static int atari_probe(
     return 0;
 }
 
-static void atari_remove(struct hid_device *hdev)
+static void retrobit_remove(struct hid_device *hdev)
 {
     hid_hw_stop(hdev);
     kfree(hid_get_drvdata(hdev));
@@ -136,24 +136,24 @@ static void atari_remove(struct hid_device *hdev)
 * Setup module                                          *
 *                                                       *
 ********************************************************/
-static struct hid_driver atari_driver = {
-    .name      = "atari",
-    .id_table  = atari_devices,
-    .probe     = atari_probe,
-    .remove    = atari_remove,
-    .raw_event = atari_raw_event
+static struct hid_driver retrobit_driver = {
+    .name      = "hid-retrobit",
+    .id_table  = retrobit_devices,
+    .probe     = retrobit_probe,
+    .remove    = retrobit_remove,
+    .raw_event = retrobit_raw_event
 };
 
-static int __init atari_init(void)
+static int __init retrobit_init(void)
 {
-    return hid_register_driver(&atari_driver);
+    return hid_register_driver(&retrobit_driver);
 }
 
-static void __exit atari_exit(void)
+static void __exit retrobit_exit(void)
 {
-    hid_unregister_driver(&atari_driver);
+    hid_unregister_driver(&retrobit_driver);
 }
 
-module_init(atari_init);
-module_exit(atari_exit);
+module_init(retrobit_init);
+module_exit(retrobit_exit);
 MODULE_LICENSE("GPL");

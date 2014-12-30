@@ -5,7 +5,7 @@ ccflags-y += -O2
 # see https://www.kernel.org/doc/Documentation/kbuild/modules.txt
 ifneq ($(KERNELRELEASE),)
 # kbuild part of makefile
-obj-m := hid-atari-retrobit.o
+obj-m := hid-retrobit.o
 
 else
 # normal makefile
