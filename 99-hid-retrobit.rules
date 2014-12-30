@@ -1,0 +1,29 @@
+# udev rules to rebind hid-retrobit supported devices
+
+ACTION!="add", GOTO="hid_retrobit_end"
+SUBSYSTEM!="usb", GOTO="hid_retrobit_end"
+
+# only match one vendor and product
+ATTRS{idVendor}=="1292", ATTRS{idProduct}=="4154", GOTO="hid_retrobit_ok"
+ATTRS{idVendor}=="1292", ATTRS{idProduct}=="4643", GOTO="hid_retrobit_ok"
+ATTRS{idVendor}=="1292", ATTRS{idProduct}=="5346", GOTO="hid_retrobit_ok"
+ATTRS{idVendor}=="1292", ATTRS{idProduct}=="4745", GOTO="hid_retrobit_ok"
+GOTO="hid_retrobit_end"
+
+LABEL="hid_retrobit_ok"
+ENV{DEVTYPE}=="usb_interface", GOTO="hid_retrobit_interface"
+
+# retrobit device
+ENV{DEVTYPE}!="usb_device", GOTO="hid_retrobit_end"
+MODE="0666"
+GOTO="hid_retrobit_end"
+
+# retrobit interface
+# ensure the device is already bound to hid-generic by using sleep 1
+LABEL="hid_retrobit_interface"
+RUN+="/bin/sh -c 'sleep 1'"
+RUN+="/bin/sh -c 'ls /sys/bus/usb/devices/$kernel | grep .*:1292:.*..* > /sys/bus/hid/drivers/hid-generic/unbind'"
+RUN+="/bin/sh -c 'ls /sys/bus/usb/devices/$kernel | grep .*:1292:.*..* > /sys/bus/hid/drivers/atari/bind'"
+
+# All done
+LABEL="hid_retrobit_end" 
