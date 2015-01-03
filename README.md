@@ -29,19 +29,10 @@ sudo modprobe hid-retrobit
 Unfortunately the driver *hid-generic* binds all HID devices with the result that 
 *hid-retrobit* is unable to do its job. The file **99-hid-retrobit.rules** contains
 some udev rules which unbinds all supported devices from *hid-generic* and rebinds
-them to *hid-retrobit* on the fly. Copy this file to **/lib/udev/rules.d** or. If
-the directory doesn't exist, copy it to **/etc/udev/rules.d**. Finally, you need
-to load some modules during boot time automatically. 
-
-To ensure that the udev rules are able to rebind the supported devices you finally
-need to copy the file **hid-retrobit.conf** to **/etc/modules-load.d**. It contains
-the following modules with the result that they are loaded during boot time 
-automatically:
-```bash
-hid-retrobit
-usbhid
-hid-generic
-```
+them to *hid-retrobit* on the fly. Copy this file to **/lib/udev/rules.d**. If the
+directory doesn't exist, copy the file to **/etc/udev/rules.d**. To ensure that the 
+udev rules are able to rebind the supported devices, you finally need to copy the 
+file **hid-retrobit.conf** to **/etc/modules-load.d**.
 
 Now your devices are ready to use. Restart your system and have fun playing games 
 retro style :).
