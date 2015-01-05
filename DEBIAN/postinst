@@ -1,0 +1,5 @@
+#!/bin/sh
+dkms add -m hid-retrobit -v 1.0.0
+dkms build -m hid-retrobit -v 1.0.0
+dkms install -m hid-retrobit -v 1.0.0
+modprobe hid-retrobit
