@@ -29,8 +29,7 @@ sudo modprobe hid-retrobit
 Unfortunately the driver *hid-generic* binds all HID devices with the result that 
 *hid-retrobit* is unable to do its job. The file **99-hid-retrobit.rules** contains
 some udev rules which unbinds all supported devices from *hid-generic* and rebinds
-them to *hid-retrobit* on the fly. Copy this file to **/lib/udev/rules.d**. If the
-directory doesn't exist, copy the file to **/etc/udev/rules.d**. 
+them to *hid-retrobit* on the fly. Copy this file to **/etc/udev/rules.d**.
 
 To ensure that the udev rules are able to rebind the supported devices, you finally 
 need to copy the file **hid-retrobit.conf** to **/etc/modules-load.d**.
