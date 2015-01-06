@@ -35,11 +35,16 @@ Installation
    ```
    sudo yum update
    ```
-3. Install the driver:  
+3. Reboot your system.
+4. Install the linux headers:  
+   ```
+   sudo yum install kernel-devel
+   ```
+5. Install the driver:  
    ```
    sudo yum localinstall hid-retrobit-1.0.0-1.noarch.rpm
    ```
-4. Plugin your device.
+6. Plugin your device.
 
 ##### Manual
 
