@@ -11,7 +11,7 @@ mkdir -p hid-retrobit/root/etc/modules-load.d
 mkdir -p hid-retrobit/root/usr/src/hid-retrobit-1.0.0
 cp header hid-retrobit/spec/
 cp post hid-retrobit/spec/
-cp postun hid-retrobit/spec/
+cp preun hid-retrobit/spec/
 popd
 
 # copy necessary files
