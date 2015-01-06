@@ -28,9 +28,9 @@ pushd RPM/hid-retrobit # otherwise togo -f fails
 # exclude ownership
 ../togo -f root/etc/udev/rules.d
 ../togo -f root/etc/modules-load.d
+../togo -f root/usr/src
 
 # create package
-../togo -f root/usr/src/hid-retrobit-1.0.0
 ../togo -bp
 popd
 
