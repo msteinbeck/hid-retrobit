@@ -13,6 +13,36 @@ If you are interested in the technical details have a look at [Details](/DETAILS
 Installation
 =====
 
+##### Debian, Ubuntu, SteamOS, ...
+
+1. Download the latest deb package from: https://github.com/retuxx/hid-retrobit/releases.
+2. Unfortunately dpkg is unable to resolve the package dependencies, so you have to install
+   them on your own:  
+   ```
+   sudo apt-get install dkms
+   ```
+3. Install the driver:  
+   ```
+   sudo dpkg -i hid-retrobit.deb
+   ```
+4. Plugin your device.
+
+##### Fedora, CentOS, ...
+
+1. Download the latest rpm package from: https://github.com/retuxx/hid-retrobit/releases.
+2. Make sure you have installed the latest kernel. Otherwise dkms is unable to build the module
+   because the linux headers are missing:  
+   ```
+   sudo yum update
+   ```
+3. Install the driver:  
+   ```
+   sudo yum localinstall hid-retrobit-1.0.0-1.noarch.rpm
+   ```
+4. Plugin your device.
+
+##### Manual
+
 Install the driver with the following commands:
 ```bash
 make              # build the driver
