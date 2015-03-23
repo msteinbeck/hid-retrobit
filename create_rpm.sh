@@ -5,7 +5,7 @@ rm -rf RPM/hid-retrobit
 
 # create working directory
 pushd RPM
-./togo -c hid-retrobit
+./togo create hid-retrobit
 mkdir -p hid-retrobit/root/etc/udev/rules.d
 mkdir -p hid-retrobit/root/etc/modules-load.d
 mkdir -p hid-retrobit/root/usr/src/hid-retrobit-1.0.0
@@ -26,12 +26,12 @@ cp README.md RPM/hid-retrobit/root/usr/src/hid-retrobit-1.0.0/
 
 pushd RPM/hid-retrobit # otherwise togo -f fails
 # exclude ownership
-../togo -f root/etc/udev/rules.d
-../togo -f root/etc/modules-load.d
-../togo -f root/usr/src
+../togo file exclude root/etc/udev/rules.d
+../togo file exclude root/etc/modules-load.d
+../togo file exclude root/usr/src
 
 # create package
-../togo -bp
+../togo build package
 popd
 
 # move rpm to root dir
