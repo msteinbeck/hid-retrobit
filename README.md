@@ -13,11 +13,23 @@ If you are interested in the technical details have a look at [Details](/DETAILS
 Installation
 =====
 
+##### Raspberry Pi (RetroPie/Raspbian)
+
+1. Download the latest deb package from: https://github.com/retuxx/hid-retrobit/releases.
+2. Install linux headers and dkms:  
+   ```
+   sudo apt-get install raspberrypi-kernel-headers dkms
+   ```
+3. Install the driver:  
+   ```
+   sudo dpkg -i hid-retrobit.deb
+   ```
+4. Plugin your device.
+
 ##### Debian, Ubuntu, SteamOS, ...
 
 1. Download the latest deb package from: https://github.com/retuxx/hid-retrobit/releases.
-2. Unfortunately dpkg is unable to resolve the package dependencies, so you have to install
-   them on your own:  
+2. Install dkms:  
    ```
    sudo apt-get install dkms
    ```
@@ -30,13 +42,13 @@ Installation
 ##### Fedora, CentOS, ...
 
 1. Download the latest rpm package from: https://github.com/retuxx/hid-retrobit/releases.
-2. Make sure you have installed the latest kernel. Otherwise dkms is unable to build the module
-   because the linux headers are missing:  
+2. Make sure you have installed the latest kernel. Otherwise, dkms is unable to build the
+   module because the linux headers are missing:  
    ```
    sudo yum update
    ```
 3. Reboot your system.
-4. Install the linux headers:  
+4. Install linux headers:  
    ```
    sudo yum install kernel-devel
    ```
