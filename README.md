@@ -1,21 +1,22 @@
-hid-retrobit is a Linux driver for the retro-bit (sometimes called Retro Link) Atari, 
-Nintendo NES, SNES & Sega Genesis joystick and gamepad controller adapters. 
-It allows the use of actual compatible devices in emulators.
+hid-retrobit is a Linux driver for the Retro-Bit (also known as Retro-Link)
+Atari, Nintendo NES, SNES, and Sega Genesis USB adapters. This driver enables
+you to use supported joysticks and gamepads in emulators.
 
 http://www.amazon.com/gp/product/B007ZS35CU/  
 http://www.amazon.com/gp/product/B0080RAT42/
 
 This driver is based on https://github.com/robmcmullen/hid-atari-retrobit.
-Unfortunately it looks that way that RobMcMulle doesn't maintain it anymore.
-However, hid-retrobit is an improved version as it is much easier to install/use.
-If you are interested in the technical details have a look at [Details](/DETAILS.md).
+Unfortunately, it looks like RobMcMulle doesn't maintain it anymore. However,
+hid-retrobit is an improved version as it is much easier to install and use.
+Have a look at [Details](/DETAILS.md) for more information.
 
 Installation
 =====
 
 ##### Raspberry Pi (RetroPie/Raspbian)
 
-1. Download the latest deb package from: https://github.com/retuxx/hid-retrobit/releases.
+1. Download the latest deb package from:
+   https://github.com/retuxx/hid-retrobit/releases.
 2. Install linux headers and dkms:  
    ```
    sudo apt-get install raspberrypi-kernel-headers dkms
@@ -28,7 +29,8 @@ Installation
 
 ##### Debian, Ubuntu, SteamOS, ...
 
-1. Download the latest deb package from: https://github.com/retuxx/hid-retrobit/releases.
+1. Download the latest deb package from:
+   https://github.com/retuxx/hid-retrobit/releases.
 2. Install dkms:  
    ```
    sudo apt-get install dkms
@@ -41,9 +43,11 @@ Installation
 
 ##### Fedora, CentOS, ...
 
-1. Download the latest rpm package from: https://github.com/retuxx/hid-retrobit/releases.
-2. Make sure you have installed the latest kernel. Otherwise, dkms is unable to build the
-   module because the linux headers are missing:  
+
+1. Download the latest rpm package from:
+   https://github.com/retuxx/hid-retrobit/releases.
+2. Make sure you have installed the latest kernel. Otherwise, dkms is unable to
+   build the module because the linux headers are missing:  
    ```
    sudo yum update
    ```
@@ -73,16 +77,15 @@ Now you should be able to load the driver with:
 sudo modprobe hid-retrobit
 ```
 
-Unfortunately the driver *hid-generic* binds all HID devices with the result that 
-*hid-retrobit* is unable to do its job. The file **99-hid-retrobit.rules** contains
-some udev rules which unbinds all supported devices from *hid-generic* and rebinds
-them to *hid-retrobit* on the fly. Copy this file to **/etc/udev/rules.d**.
+Unfortunately, the driver *hid-generic* prevents *hid-retrobit* from binding
+your device. The file **99-hid-retrobit.rules** contains some udev rules which
+unbinds all supported devices from *hid-generic* and rebinds them to
+*hid-retrobit* on the fly. Copy this file to **/etc/udev/rules.d**. To ensure
+the udev rules are able to rebind your devices, you finally need to copy the
+file **hid-retrobit.conf** to **/etc/modules-load.d**.
 
-To ensure that the udev rules are able to rebind the supported devices, you finally 
-need to copy the file **hid-retrobit.conf** to **/etc/modules-load.d**.
-
-Now your devices are ready to use. Restart your system and have fun playing games 
-retro style :).
+Now your devices are ready to use. Restart your system and have fun playing 
+games retro style :).
 
 Alternate solution
 ==================
